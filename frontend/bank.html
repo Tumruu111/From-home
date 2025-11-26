@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank</title>
+  </head>
+  <body>
+    <h1>Bank</h1>
+
+    <div>
+      <h2>Your Balance: <span id="balance">Loading...</span></h2>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+    <button onclick="deposit()">Deposit 3000</button>
+    <button onclick="withdraw()">Withdraw 2000</button>
+
+    <script>
+      const balanceEl = document.getElementById("balance");
+
+      const loadBalance = async () => {
+        const response = await fetch("http://localhost:3000/bank/balance");
+        const data = await response.json();
+        balanceEl.textContent = data.balance;
+      };
+
+      const logout = async () => {
+        const response = await fetch("http://localhost:3000/user/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        });
+        if (response.ok) {
+          window.location.href = "/login.html";
+        } else {
+          window.alert("Amjiltgui");
+        }
+      };
+
+      const deposit = async () => {
+        const response = await fetch("http://localhost:3000/bank/deposit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: 3000 })
+        });
+        const data = await response.json();
+        balanceEl.textContent = data.balance;
+      };
+
+      const withdraw = async () => {
+        const response = await fetch("http://localhost:3000/bank/withdraw", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: 2000 })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          balanceEl.textContent = data.balance;
+        } else {
+          window.alert("Insufficient funds");
+        }
+      };
+      loadBalance();
+    </script>
+  </body>
+</html>
