@@ -1,23 +1,27 @@
+import express from "express";
 import fs from "fs/promises";
 
-export const login = (req, res) => {
+const app = express();
+
+app.use(express.json());
+
+
+app.post("/user/login", (req, res) => {
   const { username, password } = req.body;
 
-  const users = JSON.parse(fs.readFileSync("data/users.json", "utf-8"));
+
+  const users = JSON.parse(fs.readFileSync("users.json", "utf-8"));
+
 
   const user = users.find(
     (u) => u.username === username && u.password === password
   );
 
-  if (!user) {
-    return res.status(401).json({ error: "Invalid credentials" });
+  if (user) {
+    res.status(200).json({ message: "Login successful" });
+  } else {
+    res.status(401).json({ message: "Invalid credentials" });
   }
+});
 
-
-  res.cookie("user", JSON.stringify({ id: user.id, username: user.username }), {
-    httpOnly: true,
-    secure: false, 
-  });
-
-  res.json({ message: "Login successful", user: { id: user.id, username: user.username } });
-};
+app.listen(3000, () => console.log("Server running on port 3000"));

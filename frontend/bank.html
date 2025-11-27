@@ -7,35 +7,24 @@
   </head>
   <body>
     <h1>Bank</h1>
-
     <div>
       <h2>Your Balance: <span id="balance">Loading...</span></h2>
     </div>
-
     <button onclick="logout()">Logout</button>
-    <button onclick="deposit()">Deposit 3000</button>
-    <button onclick="withdraw()">Withdraw 2000</button>
-
+    <button onclick="deposit()">Deposit</button>
+    <input type="number" id="depositAmount" placeholder="Enter amount"/>
+    <button onclick="withdraw()">Withdraw</button>
+    <input type="number" id="withdrawAmount" placeholder="Enter amount"/>
     <script>
       const balanceEl = document.getElementById("balance");
-
-      const loadBalance = async () => {
+        const loadBalance = async () => {
         const response = await fetch("http://localhost:3000/bank/balance");
         const data = await response.json();
         balanceEl.textContent = data.balance;
       };
-
-      const logout = async () => {
-        const response = await fetch("http://localhost:3000/user/logout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" }
-        });
-        if (response.ok) {
-          window.location.href = "/login.html";
-        } else {
-          window.alert("Amjiltgui");
-        }
-      };
+      const logout = () => {
+  window.location.href = "/login.html";
+};
 
       const deposit = async () => {
         const response = await fetch("http://localhost:3000/bank/deposit", {

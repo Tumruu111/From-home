@@ -13,26 +13,22 @@
     <div class="error" id="errorMsg"></div>
     <button id="login" onclick="login()">login</button>
     <script>
-      const login = async () => {
-          const usernameElement = document.getElementById("username");
-          const passwordElement = document.getElementById("password");
-          const username = usernameElement.value;
-          const password = passwordElement.value;
+     const login = async () => {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-          const response = await fetch("http://localhost:3000/user/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: "username", 
-            password: "password"
-          })
-        });
-        if (response.ok) {
-          window.location.href = "/bank.html";
-        } else {
-          window.alert("Amjiltgui");
-        };
-      };
+  const response = await fetch("http://localhost:3000/user/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+
+  if (response.ok) {
+    window.location.href = "/bank.html";
+  } else {
+    document.getElementById("errorMsg").textContent = "Invalid username or password";
+  }
+};
     </script>
   </body>
 </html>

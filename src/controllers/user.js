@@ -1,6 +1,7 @@
 export const login = (req, res) => {
   const username = req.body.username;
-  const password = req.body.password
+  const password = req.body.password;
+  const userId = req.body.userId
 
   res.cookie("user", JSON.stringify({ id: userId, username }), {
     httpOnly: true,
