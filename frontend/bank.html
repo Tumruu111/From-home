@@ -25,7 +25,6 @@
       const logout = () => {
   window.location.href = "/login.html";
 };
-
       const deposit = async () => {
         const response = await fetch("http://localhost:3000/bank/deposit", {
           method: "POST",
