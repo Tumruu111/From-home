@@ -1,9 +1,9 @@
 export interface Movies {
-  _id: string;
+  _id?: string;
   title: string;
-  year: number;
+  year: string;
   rated?: string;
-  runtime?: number;
+  runtime?: string;
   genres?: string[];
   directors?: string[];
   cast?: string[];

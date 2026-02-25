@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Search, ChevronLeft, ChevronRight, Film } from "lucide-react";
+import {
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  Film,
+  SquarePlus,
+} from "lucide-react";
 import { useMovies } from "@/modules/movies/hooks/useMovies";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
 import { useGenres } from "@/modules/movies/hooks/useGenres";
+import { AddMovie } from "./AddMovie";
 
 const MoviesView = () => {
   const navigate = useNavigate();
@@ -15,6 +22,7 @@ const MoviesView = () => {
   const [searchInput, setSearchInput] = useState(
     searchParams.get("search") ?? "",
   );
+  const [isAdding, setIsAdding] = useState(false);
 
   const page = Number(searchParams.get("page") ?? "1");
   const search = searchParams.get("search") ?? "";
@@ -43,6 +51,10 @@ const MoviesView = () => {
     setSearchParams({ search, genre: newGenre, page: "1" });
   };
 
+  const handleAddMovie = () => {
+    setIsAdding(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
@@ -51,6 +63,7 @@ const MoviesView = () => {
             <Film className="w-6 h-6" />
             <span className="text-xl font-bold tracking-tight">Movies</span>
           </div>
+
           <form onSubmit={handleSearch} className="flex gap-2 flex-1 max-w-lg">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -64,6 +77,16 @@ const MoviesView = () => {
             </div>
             <Button type="submit">Search</Button>
           </form>
+          <div className="flex flex-wrap gap-4 mb-6">
+            <SquarePlus className="w-6 h-6" />
+            <button
+              className="relative flex-auto bg-slate-950 rounded-md text-slate-50"
+              onClick={() => handleAddMovie()}
+            >
+              Add movie
+            </button>
+            {isAdding && <AddMovie />}
+          </div>
           {total > 0 && (
             <span className="text-muted-foreground text-sm ml-auto hidden md:block">
               {total.toLocaleString()} movies
