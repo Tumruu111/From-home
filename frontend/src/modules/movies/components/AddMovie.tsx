@@ -27,15 +27,15 @@ export const AddMovie = () => {
         title,
         plot,
         directors: directors.split(","),
-        year,
+        year: Number(year),
         genres: genres.split(","),
-        runtime,
+        runtime: Number(runtime),
         imdb: {
           rating: Number(rating),
         },
         fullplot,
       });
-      console.log(result);
+      console.log("Successful", result);
 
       alert("Movie added successfully!");
 
