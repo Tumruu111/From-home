@@ -8,18 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
 import { useGenres } from "@/modules/movies/hooks/useGenres";
-// const GENRES = [
-//   "Action",
-//   "Comedy",
-//   "Drama",
-//   "Horror",
-//   "Romance",
-//   "Thriller",
-//   "Animation",
-//   "Documentary",
-//   "Crime",
-//   "Sci-Fi",
-// ];
 
 const MoviesView = () => {
   const navigate = useNavigate();
@@ -39,7 +27,7 @@ const MoviesView = () => {
     genre: selectedGenre || undefined,
   });
 
-  const { GENRES } = useGenres();
+  const { data: GENRES = [], isLoading: genresLoading } = useGenres();
   console.log(GENRES, "genre");
   const movies = data?.movies ?? [];
   const totalPages = data?.totalPages ?? 1;
@@ -94,17 +82,25 @@ const MoviesView = () => {
           >
             All
           </Button>
-          {/* {GENRES.map((genres) => (
-            <Button
-              key={genres}
-              variant={selectedGenre === genres ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleGenreSelect(genres)}
-              className="rounded-full text-xs"
-            >
-              {genres}
-            </Button>
-          ))} */}
+
+          {genresLoading && (
+            <span className="text-sm text-muted-foreground">
+              Loading genres...
+            </span>
+          )}
+
+          {!genresLoading &&
+            GENRES.map((genre: string) => (
+              <Button
+                key={genre}
+                variant={selectedGenre === genre ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleGenreSelect(genre)}
+                className="rounded-full text-xs"
+              >
+                {genre}
+              </Button>
+            ))}
         </div>
 
         {(search || selectedGenre) && (

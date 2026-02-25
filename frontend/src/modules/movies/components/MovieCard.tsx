@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Star, Film } from "lucide-react";
-import type { Movie } from "@/types/movie";
+import type { Movies } from "@/types/movie";
 
 const MovieCard = ({
   movie,
-  onClick
+  onClick,
 }: {
-  movie: Movie;
+  movie: Movies;
   onClick: () => void;
 }) => {
   const [imgError, setImgError] = useState(false);
@@ -41,7 +41,7 @@ const MovieCard = ({
         <p className="text-muted-foreground text-xs">{movie.year}</p>
         {movie.genres && movie.genres.length > 0 && (
           <div className="flex flex-wrap gap-1 pt-1">
-            {movie.genres.slice(0, 2).map(g => (
+            {movie.genres.slice(0, 2).map((g) => (
               <span
                 key={g}
                 className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded"

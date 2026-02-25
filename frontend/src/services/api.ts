@@ -36,12 +36,14 @@ export const getMovie = async (id: string): Promise<Movies> => {
   return res.json();
 };
 
-export const getGenres = async (): Promise<any> => {
+export const getGenres = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}/movies/genres`, {
     headers: getHeaders(),
   });
 
-  return res.json();
+  const data = await res.json();
+
+  return data.genres ?? [];
 };
 export const login = async (email: string, password: string) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -50,5 +52,19 @@ export const login = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Invalid credentials");
+  return res.json();
+};
+export const signup = async (
+  email: string,
+  username: string,
+  password: string,
+) => {
+  const res = await fetch(`${BASE_URL}/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, username, password }),
+  });
+  if (!res.ok) throw new Error("aldaa!");
+  console.log("aaaa", res);
   return res.json();
 };
