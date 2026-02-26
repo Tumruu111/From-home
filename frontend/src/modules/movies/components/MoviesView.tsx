@@ -80,7 +80,7 @@ const MoviesView = () => {
           <div className="flex flex-wrap gap-4 mb-6">
             <SquarePlus className="w-6 h-6" />
             <button
-              className="relative flex-auto bg-slate-950 rounded-md text-slate-50"
+              className="relative flex-auto bg-slate-950 rounded-md text-slate-50 text-sm"
               onClick={() => handleAddMovie()}
             >
               Add movie
