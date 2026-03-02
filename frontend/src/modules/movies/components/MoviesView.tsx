@@ -7,22 +7,24 @@ import {
   Film,
   SquarePlus,
 } from "lucide-react";
+
 import { useMovies } from "@/modules/movies/hooks/useMovies";
+import { useGenres } from "@/modules/movies/hooks/useGenres";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+
 import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
-import { useGenres } from "@/modules/movies/hooks/useGenres";
-import { AddMovie } from "./AddMovie";
 
 const MoviesView = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [searchInput, setSearchInput] = useState(
     searchParams.get("search") ?? "",
   );
-  const [isAdding, setIsAdding] = useState(false);
 
   const page = Number(searchParams.get("page") ?? "1");
   const search = searchParams.get("search") ?? "";
@@ -36,27 +38,32 @@ const MoviesView = () => {
   });
 
   const { data: GENRES = [], isLoading: genresLoading } = useGenres();
-  console.log(GENRES, "genre");
+
   const movies = data?.movies ?? [];
   const totalPages = data?.totalPages ?? 1;
   const total = data?.total ?? 0;
 
-  const handleSearch = (e: { preventDefault(): void }) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchParams({ search: searchInput, page: "1" });
   };
 
   const handleGenreSelect = (genre: string) => {
     const newGenre = selectedGenre === genre ? "" : genre;
-    setSearchParams({ search, genre: newGenre, page: "1" });
+    setSearchParams({
+      search,
+      genre: newGenre,
+      page: "1",
+    });
   };
 
   const handleAddMovie = () => {
-    setIsAdding(true);
+    navigate("/add-movie");
   };
 
   return (
     <div className="min-h-screen bg-background">
+      {/* HEADER */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
           <div className="flex items-center gap-2 mr-4">
@@ -64,29 +71,28 @@ const MoviesView = () => {
             <span className="text-xl font-bold tracking-tight">Movies</span>
           </div>
 
+          {/* SEARCH */}
           <form onSubmit={handleSearch} className="flex gap-2 flex-1 max-w-lg">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+
               <Input
-                type="text"
                 placeholder="Search movies..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 className="pl-9"
               />
             </div>
+
             <Button type="submit">Search</Button>
           </form>
-          <div className="flex flex-wrap gap-4 mb-6">
-            <SquarePlus className="w-6 h-6" />
-            <button
-              className="relative flex-auto bg-slate-950 rounded-md text-slate-50 text-sm"
-              onClick={() => handleAddMovie()}
-            >
-              Add movie
-            </button>
-            {isAdding && <AddMovie />}
-          </div>
+
+          {/* ADD MOVIE */}
+          <Button onClick={handleAddMovie} className="flex items-center gap-2">
+            <SquarePlus className="w-4 h-4" />
+            Add Movie
+          </Button>
+
           {total > 0 && (
             <span className="text-muted-foreground text-sm ml-auto hidden md:block">
               {total.toLocaleString()} movies
@@ -95,7 +101,9 @@ const MoviesView = () => {
         </div>
       </header>
 
+      {/* MAIN */}
       <main className="max-w-7xl mx-auto px-4 py-6">
+        {/* GENRES */}
         <div className="flex flex-wrap gap-2 mb-6">
           <Button
             variant={!selectedGenre ? "default" : "outline"}
@@ -126,13 +134,17 @@ const MoviesView = () => {
             ))}
         </div>
 
+        {/* ACTIVE FILTERS */}
         {(search || selectedGenre) && (
           <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
             <span>Showing results for:</span>
+
             {search && <Badge variant="secondary">"{search}"</Badge>}
+
             {selectedGenre && (
               <Badge variant="secondary">{selectedGenre}</Badge>
             )}
+
             <Button
               variant="link"
               size="sm"
@@ -147,11 +159,11 @@ const MoviesView = () => {
           </div>
         )}
 
+        {/* ERROR */}
         {isError && (
           <div className="border border-destructive/50 text-destructive rounded-lg p-6 text-center mb-6">
-            <p className="font-medium">
-              Failed to load movies. Make sure the backend server is running.
-            </p>
+            <p className="font-medium">Failed to load movies.</p>
+
             <Button
               variant="destructive"
               onClick={() => refetch()}
@@ -163,6 +175,7 @@ const MoviesView = () => {
           </div>
         )}
 
+        {/* MOVIE GRID */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {isLoading
             ? Array.from({ length: 20 }).map((_, i) => (
@@ -177,16 +190,15 @@ const MoviesView = () => {
               ))}
         </div>
 
+        {/* EMPTY */}
         {!isLoading && !isError && movies.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
             <Film className="w-16 h-16 mx-auto mb-4 opacity-30" />
             <p className="text-lg font-medium">No movies found</p>
-            <p className="text-sm mt-1">
-              Try a different search or genre filter.
-            </p>
           </div>
         )}
 
+        {/* PAGINATION */}
         {!isLoading && totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-8">
             <Button
@@ -203,9 +215,11 @@ const MoviesView = () => {
               <ChevronLeft className="w-4 h-4 mr-1" />
               Previous
             </Button>
+
             <span className="text-muted-foreground text-sm">
               Page {page} of {totalPages}
             </span>
+
             <Button
               variant="outline"
               onClick={() =>

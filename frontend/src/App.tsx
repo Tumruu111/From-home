@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MoviesPage from "@/pages/movies/MoviesPage";
 import MovieDetailPage from "@/pages/movies/MovieDetailPage";
+import { AddMovie } from "./modules/movies/components/AddMovie";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +18,7 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MoviesPage />} />
+        <Route path="/addMovie" element={<AddMovie />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
       </Routes>
     </BrowserRouter>
