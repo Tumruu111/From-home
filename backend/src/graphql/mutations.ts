@@ -36,23 +36,19 @@ export const userMutations = {
   signup: async (_root: any, { input }: { input: IUser }) => {
     const { email, password } = input;
 
-    // check if user exists
     const existingUser = await Users.findOne({ email });
 
     if (existingUser) {
       return "user already exists";
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create user
     const newUser = await Users.create({
       email,
       password: hashedPassword,
     });
 
-    // create token
     const token = jwt.sign(
       {
         email: newUser.email,

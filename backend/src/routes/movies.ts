@@ -1,10 +1,5 @@
 import { Router } from "express";
-import {
-  getMovies,
-  getMovieById,
-  getMovieByGenre,
-  login,
-} from "../graphql/queries";
+import { movieQueries } from "../graphql/queries";
 
 const router = Router();
 
