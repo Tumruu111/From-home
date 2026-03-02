@@ -1,34 +1,49 @@
 export const movieTypeDefs = `
   type User {
     name: String
-    email: String 
+    email: String
     password: String
     role: Int
   }
-  
+
   input loginInput {
-    email: String 
+    email: String
     password: String
   }
 
   input signupInput {
-    name: String 
+    name: String
     email: String
     password: String
   }
 `;
 
 export const userMutationTypeDefs = `
-    signup(input: signupInput): User
-    login(input: loginInput): String
-
+  signup(input: signupInput): String
+  login(input: loginInput): String
 `;
 
 export const movieMutationTypeDefs = `
-    createPoll(input: createPollInput): Poll
+  createPoll(input: createPollInput): Poll
 `;
+
 export const userQueriesTypeDefs = `
-    userVote(input: voteInput): Vote
+  userVote(input: voteInput): Vote
 `;
+
 export const movieQueriesTypeDefs = `
+`;
+
+export const schemaTypeDefs = `
+  ${movieTypeDefs}
+
+  type Query {
+    ${userQueriesTypeDefs}
+    ${movieQueriesTypeDefs}
+  }
+
+  type Mutation {
+    ${userMutationTypeDefs}
+    ${movieMutationTypeDefs}
+  }
 `;

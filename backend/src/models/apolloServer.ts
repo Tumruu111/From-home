@@ -1,19 +1,33 @@
-import { userMutationTypeDefs } from "../graphql/schema";
-
 import { gql } from "graphql-tag";
 
+import {
+  movieTypeDefs,
+  userMutationTypeDefs,
+  movieMutationTypeDefs,
+  userQueriesTypeDefs,
+  movieQueriesTypeDefs,
+} from "../graphql/schema";
+
+import { userMutations } from "../graphql/resolvers/userMutations";
+
 export const typeDefs = gql`
+  ${movieTypeDefs}
 
- type Query {
-
- }
+  type Query {
+    ${userQueriesTypeDefs}
+    ${movieQueriesTypeDefs}
+  }
 
   type Mutation {
     ${userMutationTypeDefs}
+    ${movieMutationTypeDefs}
   }
 `;
 
 export const resolvers = {
-  Mutation: {},
   Query: {},
+
+  Mutation: {
+    ...userMutations,
+  },
 };

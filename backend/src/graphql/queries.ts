@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Movies from "../models/movie";
+import Movies from "../models/Movie";
 
 export const movieQueries = {
   getMovies: async (req: Request, res: Response): Promise<void> => {
@@ -57,11 +57,11 @@ export const movieQueries = {
     }
   },
 
-  egetMovieByGenre: async (req: Request, res: Response): Promise<void> => {
+  getGenres: async (_req: Request, res: Response): Promise<void> => {
     try {
       const genres: string[] = await Movies.distinct("genres");
 
-      res.json({ genres });
+      res.json(genres);
     } catch (error) {
       console.error("Error fetching genres:", error);
       res.status(500).json({ message: "Failed to fetch genres" });
