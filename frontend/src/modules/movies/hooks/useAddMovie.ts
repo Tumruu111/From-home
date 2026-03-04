@@ -1,8 +1,8 @@
-import type { Movies } from "@/types/movie";
+import type { Movie } from "@/types/movie";
 const BASE_URL = "http://localhost:3000/api";
 
 export const useAddMovie = () => {
-  const addMovie = async (movie: Movies) => {
+  const addMovie = async (movie: Movie) => {
     try {
       const res = await fetch(`${BASE_URL}/movie/addMovie"`, {
         method: "POST",

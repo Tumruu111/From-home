@@ -53,3 +53,13 @@ export const login = async (email: string, password: string) => {
   return res.json();
 };
 export const getGenres = async () => {};
+
+export const createMovie = async (): Promise<Movie> => {
+  const res = await fetch(`${BASE_URL}/movies/create-movie`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
+  if (!res.ok) throw new Error("Attempt unsuccessful");
+  return res.json();
+};
