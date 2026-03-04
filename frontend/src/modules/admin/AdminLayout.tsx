@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import { AuthContextProvider } from "./auth/AuthContextProvider";
 
 export const AdminLayout = () => {
   return (
-    <div className="m-10">
+    <AuthContextProvider>
       <Outlet />
-    </div>
+    </AuthContextProvider>
   );
 };

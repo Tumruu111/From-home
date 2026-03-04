@@ -1,5 +1,5 @@
-export interface Movies {
-  _id?: string;
+export interface Movie {
+  _id: string;
   title: string;
   year: number;
   rated?: string;
@@ -45,7 +45,7 @@ export interface Movies {
 }
 
 export interface MoviesResponse {
-  movies: Movies[];
+  movies: Movie[];
   total: number;
   page: number;
   limit: number;

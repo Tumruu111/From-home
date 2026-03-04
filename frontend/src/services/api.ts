@@ -1,9 +1,9 @@
-import type { Movies, MoviesResponse } from "@/types/movie";
+import type { Movie, MoviesResponse } from "@/types/movie";
 
 const BASE_URL = "http://localhost:3000/api";
 
 const getHeaders = (): Record<string, string> => {
-  const token = localStorage.getItem("auth_token");
+  const token = localStorage.getItem("auth-token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -29,22 +29,20 @@ export const getMovies = async (
   return res.json();
 };
 
-export const getMovie = async (id: string): Promise<Movies> => {
+export const getMovie = async (id: string): Promise<Movie> => {
   const res = await fetch(`${BASE_URL}/movies/${id}`, {
     headers: getHeaders(),
   });
   return res.json();
 };
 
-export const getGenres = async (): Promise<string[]> => {
-  const res = await fetch(`${BASE_URL}/movies/genres`, {
+export const getUser = async (): Promise<{ id: string }> => {
+  const res = await fetch(`${BASE_URL}/auth/me`, {
     headers: getHeaders(),
   });
-
-  const data = await res.json();
-
-  return data.genres ?? [];
+  return res.json();
 };
+
 export const login = async (email: string, password: string) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -54,17 +52,4 @@ export const login = async (email: string, password: string) => {
   if (!res.ok) throw new Error("Invalid credentials");
   return res.json();
 };
-export const signup = async (
-  email: string,
-  username: string,
-  password: string,
-) => {
-  const res = await fetch(`${BASE_URL}/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, username, password }),
-  });
-  if (!res.ok) throw new Error("aldaa!");
-  console.log("aaaa", res);
-  return res.json();
-};
+export const getGenres = async () => {};

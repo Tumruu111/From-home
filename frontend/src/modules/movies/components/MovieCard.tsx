@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Star, Film } from "lucide-react";
-import type { Movies } from "@/types/movie";
+import type { Movie } from "@/types/movie";
 
 const MovieCard = ({
   movie,
   onClick,
 }: {
-  movie: Movies;
+  movie: Movie;
   onClick: () => void;
 }) => {
   const [imgError, setImgError] = useState(false);
