@@ -65,7 +65,6 @@ export const createMovie = async (
 ): Promise<void> => {
   try {
     const movie = await Movie.create(req.body);
-
     res.status(201).json(movie);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
