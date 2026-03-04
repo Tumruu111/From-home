@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { movieQueries } from "../graphql/queries";
+import {
+  getMovies,
+  getMovieById,
+  createMovie,
+} from "../controllers/movieControllers";
 
 const router = Router();
 
 router.get("/", getMovies);
-router.get("/genres", getMovieByGenre);
 router.get("/:id", getMovieById);
-router.post("/login", login);
+router.post("/create-movie", createMovie);
 
 export default router;

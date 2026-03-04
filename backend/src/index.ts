@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import moviesRouter from "./routes/movies";
-import authRouter from "./auth/routes/Auth";
+import authRouter from "./auth/routes/auth";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
