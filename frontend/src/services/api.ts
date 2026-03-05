@@ -1,4 +1,5 @@
 import type { Movie, MoviesResponse } from "@/types/movie";
+import type { MovieFormValues } from "@/modules/admin/movies/MovieForm";
 
 const BASE_URL = "http://localhost:3000/api";
 
@@ -54,12 +55,14 @@ export const login = async (email: string, password: string) => {
 };
 export const getGenres = async () => {};
 
-export const createMovie = async (): Promise<Movie> => {
+export const createMovie = async (data: MovieFormValues): Promise<Movie> => {
   const res = await fetch(`${BASE_URL}/movies/create-movie`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({}),
+    body: JSON.stringify(data),
   });
+
   if (!res.ok) throw new Error("Attempt unsuccessful");
+
   return res.json();
 };

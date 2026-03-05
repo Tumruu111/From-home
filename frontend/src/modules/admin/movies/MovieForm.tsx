@@ -74,9 +74,7 @@ export const MovieForm = ({
                 id={field.name}
                 placeholder="Enter genres"
                 value={field.value?.join(", ") || ""}
-                onChange={(e) =>
-                  field.onChange(e.target.value.split(",").map((t) => t.trim()))
-                }
+                onChange={(e) => field.onChange(e.target.value.split(","))}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -93,9 +91,7 @@ export const MovieForm = ({
                 id={field.name}
                 placeholder="Enter directors"
                 value={field.value?.join(", ") || ""}
-                onChange={(e) =>
-                  field.onChange(e.target.value.split(",").map((t) => t.trim()))
-                }
+                onChange={(e) => field.onChange(e.target.value.split(","))}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -112,9 +108,7 @@ export const MovieForm = ({
                 id={field.name}
                 placeholder="Enter casts"
                 value={field.value?.join(", ") || ""}
-                onChange={(e) =>
-                  field.onChange(e.target.value.split(",").map((t) => t.trim()))
-                }
+                onChange={(e) => field.onChange(e.target.value.split(","))}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
