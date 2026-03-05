@@ -11,6 +11,6 @@ const router = Router();
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.post("/create-movie", createMovie);
-router.put("/edit-movie/:id", editMovie);
+router.patch("/edit-movie/:id", editMovie);
 
 export default router;
