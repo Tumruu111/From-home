@@ -3,6 +3,7 @@ import {
   getMovies,
   getMovieById,
   createMovie,
+  editMovie,
 } from "../controllers/movieControllers";
 
 const router = Router();
@@ -10,5 +11,6 @@ const router = Router();
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.post("/create-movie", createMovie);
+router.put("/edit-movie/:id", editMovie);
 
 export default router;

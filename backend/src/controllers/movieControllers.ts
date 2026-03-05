@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Movie from "../models/Movie";
+import Movie from "../models/movie";
 
 export const getMovies = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -68,5 +68,15 @@ export const createMovie = async (
     res.status(201).json(movie);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const editMovie = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const editedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body);
+
+    res.status(200).json(editedMovie);
+  } catch (err) {
+    res.status(500).json({ message: "Server error!" });
   }
 };
