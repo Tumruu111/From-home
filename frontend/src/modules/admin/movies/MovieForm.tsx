@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 export const movieFormSchema = z.object({
+  _id: z.string(),
   title: z.string().min(1, "Title is required"),
   year: z.number().min(1888, "Invalid year"),
   genres: z.array(z.string()).min(1, "Select at least one genre"),
@@ -34,6 +35,7 @@ export const MovieForm = ({
   const form = useForm<MovieFormValues>({
     resolver: zodResolver(movieFormSchema),
     defaultValues: defaultValues ?? {
+      _id: "",
       title: "",
       year: new Date().getFullYear(),
       genres: [],
@@ -56,7 +58,6 @@ export const MovieForm = ({
               <Input
                 {...field}
                 id={field.name}
-                placeholder="Enter title"
                 onChange={(e) => field.onChange(e.target.value)}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -72,7 +73,6 @@ export const MovieForm = ({
               <Input
                 {...field}
                 id={field.name}
-                placeholder="Enter genres"
                 value={field.value?.join(", ") || ""}
                 onChange={(e) => field.onChange(e.target.value.split(","))}
               />
@@ -89,7 +89,6 @@ export const MovieForm = ({
               <Input
                 {...field}
                 id={field.name}
-                placeholder="Enter directors"
                 value={field.value?.join(", ") || ""}
                 onChange={(e) => field.onChange(e.target.value.split(","))}
               />
@@ -106,7 +105,6 @@ export const MovieForm = ({
               <Input
                 {...field}
                 id={field.name}
-                placeholder="Enter casts"
                 value={field.value?.join(", ") || ""}
                 onChange={(e) => field.onChange(e.target.value.split(","))}
               />
@@ -123,7 +121,6 @@ export const MovieForm = ({
               <input
                 {...field}
                 id={field.name}
-                placeholder="Enter plot"
                 onChange={(e) => field.onChange(e.target.value)}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -139,7 +136,6 @@ export const MovieForm = ({
               <input
                 {...field}
                 id={field.name}
-                placeholder="Enter poster img URL"
                 onChange={(e) => field.onChange(e.target.value)}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -156,7 +152,6 @@ export const MovieForm = ({
                 type="number"
                 {...field}
                 onChange={(e) => field.onChange(Number(e.target.value))}
-                placeholder="Enter released year"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

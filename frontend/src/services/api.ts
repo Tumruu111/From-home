@@ -66,3 +66,12 @@ export const createMovie = async (data: MovieFormValues): Promise<Movie> => {
 
   return res.json();
 };
+export const editMovie = async (data: MovieFormValues): Promise<Movie> => {
+  const res = await fetch(`${BASE_URL}/movies/edit-movie/:id`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to edit movie!");
+  return res.json();
+};

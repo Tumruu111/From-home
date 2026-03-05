@@ -9,11 +9,13 @@ import {
   Users,
   Pen,
   Video,
+  Edit,
 } from "lucide-react";
 import { useMovie } from "@/modules/movies/hooks/useMovie";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { EditMovieForm } from "@/modules/admin/movies/EditMovieForm";
 
 const DetailSkeleton = () => (
   <div className="min-h-screen bg-background">
@@ -156,6 +158,17 @@ const MovieDetailView = () => {
               <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-2">
                 {movie.title}
               </h1>
+              <h2 className="text-2xl md:text-2xl font-bold leading-2 mb-2">
+                <div className="pt-3 border-transparent flex justify-end">
+                  <button
+                    onClick={EditMovieForm}
+                    className="flex items-center gap-2 px-4 py-2 font-mono text-white bg-black rounded-lg shadow-md hover:bg-slate-500 hover:shadow-lg transition-shadow duration-200"
+                  >
+                    <Edit className="w-5 h-5" />
+                    Edit Movie
+                  </button>
+                </div>
+              </h2>
               <div className="flex flex-wrap items-center gap-3 text-muted-foreground text-sm">
                 {movie.year && <span>{movie.year}</span>}
                 {runtime && (
@@ -184,9 +197,9 @@ const MovieDetailView = () => {
 
             {(movie.fullplot || movie.plot) && (
               <div>
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                   Plot
-                </h2>
+                </h3>
                 <p className="leading-relaxed text-sm">
                   {movie.fullplot || movie.plot}
                 </p>

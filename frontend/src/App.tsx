@@ -27,7 +27,6 @@ const App = () => (
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="admin" element={<AdminLayout />}>
           <Route path="login" element={<LoginPage />} />
-
           <Route element={<AuthProviderEffect />}>
             <Route element={<AdminDashboardLayout />}>
               <Route path="movies" element={<MoviesAdminPage />} />

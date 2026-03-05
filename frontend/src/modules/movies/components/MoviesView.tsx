@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Film,
-  SquarePlus,
-} from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Film } from "lucide-react";
 
 import { useMovies } from "@/modules/movies/hooks/useMovies";
 import { useGenres } from "@/modules/movies/hooks/useGenres";
@@ -63,7 +57,6 @@ const MoviesView = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* HEADER */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
           <div className="flex items-center gap-2 mr-4">
@@ -71,7 +64,6 @@ const MoviesView = () => {
             <span className="text-xl font-bold tracking-tight">Movies</span>
           </div>
 
-          {/* SEARCH */}
           <form onSubmit={handleSearch} className="flex gap-2 flex-1 max-w-lg">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -87,12 +79,6 @@ const MoviesView = () => {
             <Button type="submit">Search</Button>
           </form>
 
-          {/* ADD MOVIE */}
-          <Button onClick={handleAddMovie} className="flex items-center gap-2">
-            <SquarePlus className="w-4 h-4" />
-            Add Movie
-          </Button>
-
           {total > 0 && (
             <span className="text-muted-foreground text-sm ml-auto hidden md:block">
               {total.toLocaleString()} movies
@@ -101,9 +87,7 @@ const MoviesView = () => {
         </div>
       </header>
 
-      {/* MAIN */}
       <main className="max-w-7xl mx-auto px-4 py-6">
-        {/* GENRES */}
         <div className="flex flex-wrap gap-2 mb-6">
           <Button
             variant={!selectedGenre ? "default" : "outline"}
@@ -134,7 +118,6 @@ const MoviesView = () => {
             ))}
         </div>
 
-        {/* ACTIVE FILTERS */}
         {(search || selectedGenre) && (
           <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
             <span>Showing results for:</span>
@@ -159,7 +142,6 @@ const MoviesView = () => {
           </div>
         )}
 
-        {/* ERROR */}
         {isError && (
           <div className="border border-destructive/50 text-destructive rounded-lg p-6 text-center mb-6">
             <p className="font-medium">Failed to load movies.</p>
@@ -175,7 +157,6 @@ const MoviesView = () => {
           </div>
         )}
 
-        {/* MOVIE GRID */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {isLoading
             ? Array.from({ length: 20 }).map((_, i) => (
@@ -190,7 +171,6 @@ const MoviesView = () => {
               ))}
         </div>
 
-        {/* EMPTY */}
         {!isLoading && !isError && movies.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
             <Film className="w-16 h-16 mx-auto mb-4 opacity-30" />
@@ -198,7 +178,6 @@ const MoviesView = () => {
           </div>
         )}
 
-        {/* PAGINATION */}
         {!isLoading && totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-8">
             <Button
