@@ -1,5 +1,6 @@
 import type { Movie, MoviesResponse } from "@/types/movie";
 import type { MovieFormValues } from "@/modules/admin/movies/MovieForm";
+import { id } from "zod/v4/locales";
 
 const BASE_URL = "http://localhost:3000/api";
 
@@ -66,9 +67,12 @@ export const createMovie = async (data: MovieFormValues): Promise<Movie> => {
 
   return res.json();
 };
-export const editMovie = async (data: MovieFormValues): Promise<Movie> => {
-  const res = await fetch(`${BASE_URL}/movies/edit-movie/:id`, {
-    method: "PUT",
+export const editMovie = async (
+  data: MovieFormValues,
+  _id: string,
+): Promise<Movie> => {
+  const res = await fetch(`${BASE_URL}/movies/edit-movie/${_id}`, {
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });

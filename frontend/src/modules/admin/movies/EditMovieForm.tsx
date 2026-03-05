@@ -1,10 +1,14 @@
 import { editMovie } from "@/services/api";
 import { MovieForm, type MovieFormValues } from "./MovieForm";
 
-export const EditMovieForm = () => {
+type Props = {
+  movieId: string;
+};
+
+export const EditMovieForm = ({ movieId }: Props) => {
   const handleEditMovie = async (data: MovieFormValues) => {
     try {
-      const editedMovie = await editMovie(data);
+      const editedMovie = await editMovie(data, movieId);
       console.log("Movie saved:", editedMovie);
     } catch (error) {
       console.error(error);
