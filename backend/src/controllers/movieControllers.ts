@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Movie from "../models/movie";
+import Movie from "../models/Movie";
 
 export const getMovies = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -73,7 +73,15 @@ export const createMovie = async (
 
 export const editMovie = async (req: Request, res: Response): Promise<void> => {
   try {
-    const editedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body);
+    const editedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!editedMovie) {
+      res.status(404).json({ message: "Movie not found" });
+      return;
+    }
 
     res.status(200).json(editedMovie);
   } catch (err) {
