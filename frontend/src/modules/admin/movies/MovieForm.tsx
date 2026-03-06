@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 export const movieFormSchema = z.object({
-  _id: z.string(),
   title: z.string().min(1, "Title is required"),
   year: z.number().min(1888, "Invalid year"),
   genres: z.array(z.string()).min(1, "Select at least one genre"),
@@ -35,7 +34,6 @@ export const MovieForm = ({
   const form = useForm<MovieFormValues>({
     resolver: zodResolver(movieFormSchema),
     defaultValues: defaultValues ?? {
-      _id: "",
       title: "",
       year: new Date().getFullYear(),
       genres: [],
@@ -74,7 +72,14 @@ export const MovieForm = ({
                 {...field}
                 id={field.name}
                 value={field.value?.join(", ") || ""}
-                onChange={(e) => field.onChange(e.target.value.split(","))}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .split(",")
+                      .map((v) => v.trim())
+                      .filter(Boolean),
+                  )
+                }
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -90,7 +95,14 @@ export const MovieForm = ({
                 {...field}
                 id={field.name}
                 value={field.value?.join(", ") || ""}
-                onChange={(e) => field.onChange(e.target.value.split(","))}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .split(",")
+                      .map((v) => v.trim())
+                      .filter(Boolean),
+                  )
+                }
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -106,7 +118,14 @@ export const MovieForm = ({
                 {...field}
                 id={field.name}
                 value={field.value?.join(", ") || ""}
-                onChange={(e) => field.onChange(e.target.value.split(","))}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value
+                      .split(",")
+                      .map((v) => v.trim())
+                      .filter(Boolean),
+                  )
+                }
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -118,7 +137,7 @@ export const MovieForm = ({
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Plot: </FieldLabel>
-              <input
+              <Input
                 {...field}
                 id={field.name}
                 onChange={(e) => field.onChange(e.target.value)}
@@ -133,7 +152,7 @@ export const MovieForm = ({
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Poster: </FieldLabel>
-              <input
+              <Input
                 {...field}
                 id={field.name}
                 onChange={(e) => field.onChange(e.target.value)}

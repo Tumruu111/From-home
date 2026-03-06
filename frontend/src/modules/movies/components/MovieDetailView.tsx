@@ -15,7 +15,6 @@ import { useMovie } from "@/modules/movies/hooks/useMovie";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { EditMovieForm } from "@/modules/admin/movies/EditMovieForm";
 
 const DetailSkeleton = () => (
   <div className="min-h-screen bg-background">
@@ -161,8 +160,8 @@ const MovieDetailView = () => {
               <h2 className="text-2xl md:text-2xl font-bold leading-2 mb-2">
                 <div className="pt-3 border-transparent flex justify-end">
                   <button
-                    onClick={EditMovieForm}
-                    className="flex items-center gap-2 px-4 py-2 font-mono text-white bg-black rounded-lg shadow-md hover:bg-slate-500 hover:shadow-lg transition-shadow duration-200"
+                    onClick={() => navigate(`/edit-movie/${id}`)}
+                    className="flex items-center gap-2 px-4 py-2 font-mono text-white bg-black rounded-lg shadow-md hover:bg-slate-500"
                   >
                     <Edit className="w-5 h-5" />
                     Edit Movie
