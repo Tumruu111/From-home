@@ -1,6 +1,7 @@
 import type { Movie, MoviesResponse } from "@/types/movie";
 import type { MovieFormValues } from "@/modules/admin/movies/MovieForm";
 import { id } from "zod/v4/locales";
+import { data } from "react-router-dom";
 
 const BASE_URL = "http://localhost:3000/api";
 
@@ -71,12 +72,25 @@ export const editMovie = async (
   data: MovieFormValues,
   _id: string,
 ): Promise<MovieFormValues> => {
-  const res = await fetch(`${BASE_URL}/movies/${_id}`, {
-    method: "PATCH",
+  const res = await fetch(`${BASE_URL}/movies/edit-movie/${_id}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
   if (!res.ok) throw new Error("Failed to edit movie!");
+  return res.json();
+};
+
+export const deleteMovie = async (
+  _id: string,
+  data: MovieFormValues,
+): Promise<void> => {
+  const res = await fetch(`${BASE_URL}/movies/delete-movies/${_id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to delete movie!");
   return res.json();
 };

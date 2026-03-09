@@ -32,6 +32,7 @@ const App = () => (
               <Route path="movies" element={<MoviesAdminPage />} />
               <Route path="create-movie" element={<CreateMoviePage />} />
               <Route path="edit-movie/:id" element={<EditMoviePage />} />
+              <Route path="delete-movie/:id" />
             </Route>
           </Route>
         </Route>

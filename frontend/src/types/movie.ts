@@ -21,8 +21,8 @@ export interface Movie {
     nominations?: number;
     text?: string;
   };
-  languages?: string[];
-  countries?: string[];
+  language?: string;
+  country?: string;
   type?: string;
   num_mflix_comments?: number;
   released?: string;

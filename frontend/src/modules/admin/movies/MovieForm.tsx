@@ -14,6 +14,18 @@ export const movieFormSchema = z.object({
   cast: z.array(z.string()).optional(),
   plot: z.string().optional(),
   poster: z.string().url("Poster must be a valid URL").optional(),
+  runtime: z.number().min(1, "Runtime required"),
+  languages: z.array(z.string()).min(1, "Language"),
+  countries: z.array(z.string()).min(1, "Country is required"),
+  imdb: z.object({
+    rating: z.number().min(1, "IMDb rating required"),
+    votes: z.number().min(0, "Votes required"),
+  }),
+  awards: z.object({
+    wins: z.number().min(0, "Wins required"),
+    nominations: z.number().min(0, "Nominations required"),
+    text: z.string().min(1, "Text required"),
+  }),
 });
 
 export type MovieFormValues = z.infer<typeof movieFormSchema>;
@@ -41,6 +53,18 @@ export const MovieForm = ({
       cast: [],
       plot: "",
       poster: "",
+      runtime: 1,
+      languages: [],
+      countries: [],
+      imdb: {
+        rating: 0,
+        votes: 0,
+      },
+      awards: {
+        wins: 0,
+        nominations: 0,
+        text: "",
+      },
     },
   });
 
@@ -171,6 +195,93 @@ export const MovieForm = ({
                 type="number"
                 {...field}
                 onChange={(e) => field.onChange(Number(e.target.value))}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="runtime"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Runtime: </FieldLabel>
+              <Input
+                {...field}
+                id={field.name}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="languages"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Languages (comma-separated): </FieldLabel>
+              <Input
+                {...field}
+                value={
+                  Array.isArray(field.value)
+                    ? field.value.join(", ")
+                    : field.value
+                }
+                onChange={(e) =>
+                  field.onChange(e.target.value.split(",").map((s) => s.trim()))
+                }
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="countries"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Countries: </FieldLabel>
+              <Input
+                {...field}
+                value={
+                  Array.isArray(field.value)
+                    ? field.value.join(", ")
+                    : field.value
+                }
+                onChange={(e) =>
+                  field.onChange(e.target.value.split(",").map((s) => s.trim()))
+                }
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="imdb.rating"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>IMDb rating: </FieldLabel>
+              <Input
+                {...field}
+                id={field.name}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="awards.wins"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Awards: </FieldLabel>
+              <Input
+                {...field}
+                id={field.name}
+                onChange={(e) => field.onChange(e.target.value)}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

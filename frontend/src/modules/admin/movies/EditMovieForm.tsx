@@ -3,10 +3,10 @@ import { editMovie, getMovie } from "@/services/api";
 import { MovieForm, type MovieFormValues } from "./MovieForm";
 
 type Props = {
-  movieId: string;
+  _id: string;
 };
 
-export const EditMovieForm = ({ movieId }: Props) => {
+export const EditMovieForm = ({ _id }: Props) => {
   const [defaultValues, setDefaultValues] = useState<MovieFormValues | null>(
     null,
   );
@@ -15,7 +15,7 @@ export const EditMovieForm = ({ movieId }: Props) => {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const movieData = await getMovie(movieId);
+        const movieData = await getMovie(_id);
 
         const normalizedData: MovieFormValues = {
           title: movieData.title || "",
@@ -25,6 +25,18 @@ export const EditMovieForm = ({ movieId }: Props) => {
           cast: movieData.cast || [],
           plot: movieData.plot || "",
           poster: movieData.poster || "",
+          runtime: movieData.runtime || 1,
+          languages: movieData.languages || [],
+          countries: movieData.countries || [],
+          imdb: {
+            rating: movieData.imdb?.rating || 0,
+            votes: movieData.imdb?.votes || 0,
+          },
+          awards: {
+            wins: movieData.awards?.wins || 0,
+            nominations: movieData.awards?.nominations || 0,
+            text: movieData.awards?.text || "",
+          },
         };
 
         setDefaultValues(normalizedData);
@@ -35,16 +47,15 @@ export const EditMovieForm = ({ movieId }: Props) => {
     };
 
     fetchMovie();
-  }, [movieId]);
+  }, [_id]);
 
   const handleEditMovie = async (data: MovieFormValues) => {
     try {
       setIsPending(true);
-      const editedMovie = await editMovie(data, movieId);
-      console.log("Movie saved:", editedMovie);
+      await editMovie(data, _id);
+
       alert("Movie updated successfully!");
     } catch (error) {
-      console.error(error);
       alert("Failed to update movie.");
     } finally {
       setIsPending(false);
